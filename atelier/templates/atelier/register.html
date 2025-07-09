@@ -1,0 +1,23 @@
+{% extends "atelier/base.html" %}
+{% load widget_tweaks %}
+{% block title %}Inscription - Atelier Maintenance{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2>Créer un compte</h2>
+  <form method="post" class="mt-4">
+    {% csrf_token %}
+    {% for field in form %}
+      <div class="mb-3">
+        <label class="form-label">{{ field.label }}</label>
+        {{ field|add_class:"form-control" }}
+        {% if field.errors %}
+          <div class="text-danger">{{ field.errors }}</div>
+        {% endif %}
+      </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-success">S'inscrire</button>
+    <a href="{% url 'login' %}" class="btn btn-link">J'ai déjà un compte</a>
+  </form>
+</div>
+{% endblock %}

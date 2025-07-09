@@ -1,4 +1,6 @@
 from django import forms
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 from .models import Appareil, Agent, Intervention, Technicien, Diagnostic, Tache
 
 class AppareilForm(forms.ModelForm):
@@ -39,3 +41,11 @@ class FiltreInterventionForm(forms.Form):
     date_fin = forms.DateField(required=False, widget=forms.DateInput(attrs={'type': 'date'}))
     technicien = forms.ModelChoiceField(queryset=Technicien.objects.all(), required=False)
     situation = forms.ChoiceField(choices=[('', 'Toutes'), ('terminee', 'Terminée'), ('en_cours', 'En cours')], required=False)
+
+
+class CustomUserCreationForm(UserCreationForm):
+    email = forms.EmailField(required=True, label="Adresse e-mail")
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']

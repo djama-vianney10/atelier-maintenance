@@ -38,6 +38,17 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'technicien_list' %}">Techniciens</a>
                     </li>
+                   <li class="nav-item">
+                    {% if user.is_authenticated %}
+                        <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                    {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-light ms-2">Déconnexion</button>
+                        </form>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="btn btn-outline-light ms-2">Connexion</a>
+                    {% endif %}
+                    </li>
+
                 </ul>
             </div>
         </div>

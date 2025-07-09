@@ -1,0 +1,31 @@
+{% extends "atelier/base.html" %}
+{% load widget_tweaks %}
+
+{% block title %}Connexion - Atelier Maintenance{% endblock %}
+
+{% block content %}
+<div class="container mt-5" style="max-width: 500px;">
+  <div class="card shadow-sm">
+    <div class="card-header bg-primary text-white">
+      <h4 class="mb-0">Connexion</h4>
+    </div>
+    <div class="card-body">
+      <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="id_username" class="form-label">Nom d'utilisateur</label>
+          {{ form.username|add_class:"form-control" }}
+        </div>
+        <div class="mb-3">
+          <label for="id_password" class="form-label">Mot de passe</label>
+          {{ form.password|add_class:"form-control" }}
+        </div>
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary">Se connecter</button>
+        </div>
+        <a href="{% url 'register' %}">Créer un compte</a>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

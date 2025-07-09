@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'widget_tweaks',
     'atelier',
 ]
 
@@ -52,6 +53,11 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'atelier_maintenance.urls'
+
+# Redirections pour le système d'authentification
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'dashboard'      # Où rediriger après connexion
+LOGOUT_REDIRECT_URL = 'login'         # Où rediriger après déconnexion
 
 TEMPLATES = [
     {

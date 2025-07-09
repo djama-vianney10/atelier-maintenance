@@ -1,12 +1,32 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from django.db.models import Count, Q
 from django.contrib import messages
 from .models import Appareil, Agent, Intervention, Technicien, Diagnostic, Tache
-from .forms import AppareilForm, AgentForm, InterventionForm, TechnicienForm, DiagnosticForm, TacheForm, FiltreInterventionForm
+from .forms import AppareilForm, AgentForm, InterventionForm, TechnicienForm, DiagnosticForm, TacheForm, FiltreInterventionForm, CustomUserCreationForm
 
 # Create your views here.
+
+#Create formulaire register
+def register(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)  # Connexion automatique après inscription
+            messages.success(request, "Inscription réussie. Bienvenue !")
+            return redirect('dashboard')  # Redirection vers le tableau de bord
+        else:
+            messages.error(request, "Erreur lors de l'inscription.")
+    else:
+        form = CustomUserCreationForm()
+    return render(request, 'atelier/register.html', {'form': form})
+
 #Create Dashboard
+@login_required
 def dashboard(request):
     interventions = Intervention.objects.select_related('agent').prefetch_related('techniciens', 'appareils').order_by('-date_debut')
     
@@ -54,6 +74,7 @@ def dashboard(request):
     return render(request, 'atelier/dashboard.html', context)
 
 # Lister tous les appareils
+@login_required
 def appareil_list(request):
     appareils = Appareil.objects.all()
     return render(request, 'atelier/appareil_list.html', {'appareils': appareils})
@@ -111,6 +132,7 @@ def agent_create(request):
 
 
 # READ (LISTE)
+@login_required
 def agent_list(request):
     agents = Agent.objects.all()
     return render(request, 'atelier/agent_list.html', {'agents': agents})
@@ -146,6 +168,7 @@ def agent_delete(request, pk):
 
 
 #List INTERVENTION
+@login_required
 def intervention_list(request):
     interventions = Intervention.objects.all()
     return render(request, 'atelier/intervention_list.html', {'interventions': interventions})
@@ -229,6 +252,7 @@ def update_condition_technicien(technicien):
 
 
 #lister techniciens
+@login_required
 def technicien_list(request):
     techniciens = Technicien.objects.all()
     return render(request, 'atelier/technicien_list.html', {'techniciens': techniciens})
