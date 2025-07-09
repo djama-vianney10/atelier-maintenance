@@ -52,7 +52,7 @@ class Intervention(models.Model):
     situation = models.CharField(max_length=20, choices=SITUATION_CHOICES, default='en cours', verbose_name='Situation')
 
     def __str__(self):
-        return f"Intervention #{self.id} - {self.date_debut.strftime('%Y-%m-%d')}"
+        return f"Intervention #{self.id} - {self.date_debut.strftime('%d-%m-%Y')}"
 
 class Tache(models.Model):
     intervention = models.ForeignKey(Intervention, on_delete=models.CASCADE, related_name='taches')
