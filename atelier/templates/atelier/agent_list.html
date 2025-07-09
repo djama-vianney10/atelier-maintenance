@@ -1,0 +1,57 @@
+{% extends 'atelier/base.html' %}
+{% load static %}
+
+{% block title %}Liste des Agents{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{% static 'atelier/css/styles.css' %}">
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h2>Liste des agents</h2>
+
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+      {% endfor %}
+    {% endif %}
+
+    <a href="{% url 'agent_create' %}" class="btn btn-primary mb-3">Ajouter un agent</a>
+
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Prénom</th>
+          <th>Adresse</th>
+          <th>Grade</th>
+          <th>Service</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for agent in agents %}
+        <tr>
+          <td>{{ agent.nom }}</td>
+          <td>{{ agent.prenom }}</td>
+          <td>{{ agent.adresse }}</td>
+          <td>{{ agent.grade }}</td>
+          <td>{{ agent.service }}</td>
+          <td>
+            <a href="{% url 'agent_update' agent.id %}" class="btn btn-warning btn-sm">Modifier</a>
+            <a href="{% url 'agent_delete' agent.id %}" class="btn btn-danger btn-sm">Supprimer</a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="3">Aucun agent enregistré.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

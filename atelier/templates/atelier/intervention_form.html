@@ -1,0 +1,20 @@
+{% extends 'atelier/base.html' %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h2>{% if intervention %}Modifier{% else %}Ajouter{% endif %} une intervention</h2>
+
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-primary">Enregistrer</button>
+      <a href="{% url 'intervention_list' %}" class="btn btn-secondary">Annuler</a>
+    </form>
+  </div>
+{% endblock %}

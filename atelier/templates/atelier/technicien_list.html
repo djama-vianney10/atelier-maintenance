@@ -1,0 +1,59 @@
+{% extends 'atelier/base.html' %}
+{% load static %}
+
+{% block title %}Liste des Techniciens{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{% static 'atelier/css/styles.css' %}">
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h2>Liste des techniciens</h2>
+
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+      {% endfor %}
+    {% endif %}
+
+    <a href="{% url 'technicien_create' %}" class="btn btn-success mb-3">Nouveau technicien</a>
+
+    {% if techniciens %}
+      <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+          <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Statut</th>
+            <th>Téléphone</th>
+            <th>Conditions</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for technicien in techniciens %}
+            <tr>
+              <td>{{ technicien.id }}</td>
+              <td>{{ technicien.nom }}</td>
+              <td>{{ technicien.prenom }}</td>
+              <td>{{ technicien.statut }}</td>
+              <td>{{ technicien.telephone }}</td>
+              <td>{{ technicien.condition }}</td>
+              <td>
+                <a href="{% url 'technicien_update' technicien.id %}" class="btn btn-sm btn-primary">Modifier</a>
+                <a href="{% url 'technicien_delete' technicien.id %}" class="btn btn-sm btn-danger">Supprimer</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>Aucun technicien enregistré.</p>
+    {% endif %}
+  </div>
+{% endblock %}

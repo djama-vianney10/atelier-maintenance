@@ -1,0 +1,59 @@
+{% extends 'atelier/base.html' %}
+{% load static %}
+
+{% block title %}Liste des Agents{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{% static 'atelier/css/styles.css' %}">
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h2>Liste des appareils</h2>
+
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+      {% endfor %}
+    {% endif %}
+
+    <a href="{% url 'appareil_create' %}" class="btn btn-success mb-3">Nouvel appareil</a>
+
+    {% if appareils %}
+      <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+          <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>modele</th>
+            <th>marque</th>
+            <th>Agent propriétaire</th>
+            <th>Etat</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for appareil in appareils %}
+            <tr>
+              <td>{{ appareil.id }}</td>
+              <td>{{ appareil.nom }}</td>
+              <td>{{ appareil.modele }}</td>
+              <td>{{ appareil.marque }}</td>
+              <td>{{ appareil.agent }}</td>
+              <td>{{ appareil.etat }}</td>
+              <td>
+                <a href="{% url 'appareil_update' appareil.id %}" class="btn btn-sm btn-primary">Modifier</a>
+                <a href="{% url 'appareil_delete' appareil.id %}" class="btn btn-sm btn-danger">Supprimer</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>Aucun appareil enregistré.</p>
+    {% endif %}
+  </div>
+{% endblock %}

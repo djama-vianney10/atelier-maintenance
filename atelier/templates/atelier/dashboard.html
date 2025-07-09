@@ -1,0 +1,112 @@
+{% extends "atelier/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+
+  <h2 class="mb-4">Tableau de Bord</h2>
+
+  <!-- Statistiques -->
+  <div class="row text-white mb-4">
+    <div class="col-md-3">
+      <div class="card bg-primary shadow-sm">
+        <div class="card-body">
+          <h5>Total Interventions</h5>
+          <h3>{{ total_interventions }}</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card bg-success shadow-sm">
+        <div class="card-body">
+          <h5>Terminées</h5>
+          <h3>{{ interventions_terminees }}</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card bg-warning shadow-sm">
+        <div class="card-body">
+          <h5>En cours</h5>
+          <h3>{{ interventions_en_cours }}</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card bg-danger shadow-sm">
+        <div class="card-body">
+          <h5>Appareils en panne</h5>
+          <h3>{{ appareils_pannes }}</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row text-white mb-4">
+    <div class="col-md-6">
+      <div class="card bg-info shadow-sm">
+        <div class="card-body">
+          <h5>Appareils réparés</h5>
+          <h3>{{ appareils_repares }}</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card bg-secondary shadow-sm">
+        <div class="card-body">
+          <h5>Techniciens</h5>
+          <p>Disponibles : <strong>{{ techniciens_disponibles }}</strong></p>
+          <p>Occupés : <strong>{{ techniciens_occupes }}</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Historique -->
+<!-- Formulaire de filtre -->
+  <div class="card mt-4">
+    <div class="card-header bg-dark text-white">
+      <h5 class="mb-0">Historique des dernières interventions</h5>
+    </div>
+    <div class="card-body p-0">
+      <table class="table table-hover m-0">
+        <thead class="table-light">
+          <tr>
+            <th>Date début</th>
+            <th>Date fin</th>
+            <th>Agent</th>
+            <th>Techniciens</th>
+            <th>Situation</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for intervention in interventions %}
+          <tr>
+            <td>{{ intervention.date_debut }}</td>
+            <td>{{ intervention.date_fin }}</td>
+            <td>{{ intervention.agent.nom }}</td>
+            <td>
+              {% for tech in intervention.techniciens.all %}
+                {{ tech.nom }}{% if not forloop.last %}, {% endif %}
+              {% endfor %}
+            </td>
+            <td>
+              {% if intervention.situation == "terminée" %}
+                <span class="badge bg-success">Terminée</span>
+              {% else %}
+                <span class="badge bg-warning">En cours</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="5">Aucune intervention disponible.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

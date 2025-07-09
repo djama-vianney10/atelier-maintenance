@@ -1,0 +1,60 @@
+{% extends 'atelier/base.html' %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+  <h2 class="mb-4">Liste des interventions</h2>
+  
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+    {% endfor %}
+  {% endif %}
+
+  <a href="{% url 'intervention_create' %}" class="btn btn-success mb-3">Ajouter une intervention</a>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Description</th>
+        <th>Date de début</th>
+        <th>Date de fin</th>
+        <th>Appareils concernés</th>
+        <th>Technicien Assigné</th>
+        <th>situation</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for intervention in interventions %}
+      <tr>
+        <td>{{ intervention.id }}</td>
+        <td>{{ intervention.description }}</td>
+        <td>{{ intervention.date_debut }}</td>
+        <td>{{ intervention.date_fin }}</td>
+        <td>
+          {% for appareil in intervention.appareils.all %}
+            {{ appareil.nom }}
+          {% endfor %}
+        </td>
+        <td>
+           {% for technicien in intervention.techniciens.all %}
+            {{ technicien.nom }} {{ technicien.prenom }}<br>
+          {% endfor %}
+        </td>
+         <td>{{ intervention.situation }}</td>
+         <!-- |yesno:"Oui,Non" -->
+
+         <td>
+          <a href="{% url 'intervention_update' intervention.id %}" class="btn btn-sm btn-primary">Modifier</a>
+          <a href="{% url 'intervention_delete' intervention.id %}" class="btn btn-sm btn-danger">Supprimer</a>
+          </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

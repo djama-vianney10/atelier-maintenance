@@ -1,0 +1,18 @@
+{% extends 'atelier/base.html' %}
+{% block content %}
+  <h2>Liste des Diagnostics</h2>
+  <a href="{% url 'diagnostic_add' %}" class="btn btn-primary mb-3">Ajouter un diagnostic</a>
+  <ul class="list-group">
+    {% for diagnostic in diagnostics %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        {{ diagnostic.description }}
+        <span>
+          <a href="{% url 'diagnostic_edit' diagnostic.id %}" class="btn btn-sm btn-warning">Modifier</a>
+          <a href="{% url 'diagnostic_delete' diagnostic.id %}" class="btn btn-sm btn-danger">Supprimer</a>
+        </span>
+      </li>
+    {% empty %}
+      <li class="list-group-item">Aucun diagnostic disponible.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'atelier/base.html' %}
+{% block content %}
+  <h2>Supprimer le technicien</h2>
+  <p>Êtes-vous sûr de vouloir supprimer le technicien : <strong>{{ technicien.nom }}</strong> ?</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Oui, supprimer</button>
+    <a href="{% url 'technicien_list' %}" class="btn btn-secondary">Annuler</a>
+  </form>
+{% endblock %}

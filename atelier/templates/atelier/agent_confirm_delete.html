@@ -1,0 +1,10 @@
+{% extends 'atelier/base.html' %}
+{% block content %}
+<h2>Confirmation de suppression</h2>
+<p>Êtes-vous sûr de vouloir supprimer l'agent {{ agent.nom }} ?</p>
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">Oui, supprimer</button>
+  <a href="{% url 'agent_list' %}">Annuler</a>
+</form>
+{% endblock %}
