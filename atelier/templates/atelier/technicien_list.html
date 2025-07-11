@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block content %}
-  <div class="container mt-4">
+  <div class="container mt-4 table-responsive">
     <h2>Liste des techniciens</h2>
 
     {% if messages %}
@@ -45,8 +45,8 @@
               <td>{{ technicien.telephone }}</td>
               <td>{{ technicien.condition }}</td>
               <td>
-                <a href="{% url 'technicien_update' technicien.id %}" class="btn btn-sm btn-primary">Modifier</a>
-                <a href="{% url 'technicien_delete' technicien.id %}" class="btn btn-sm btn-danger">Supprimer</a>
+                <a href="{% url 'technicien_update' technicien.id %}" class="btn btn-sm btn-primary mb-4">Modifier</a>
+                <a href="{% url 'technicien_delete' technicien.id %}" class="btn btn-sm btn-danger mb-4">Supprimer</a>
               </td>
             </tr>
           {% endfor %}

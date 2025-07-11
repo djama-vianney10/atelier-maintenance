@@ -1,7 +1,7 @@
 {% extends 'atelier/base.html' %}
 
 {% block content %}
-<div class="container-fluid mt-4">
+<div class="container-fluid mt-4 table-responsive">
   <h2 class="mb-4">Liste des interventions</h2>
   
   {% if messages %}
@@ -15,7 +15,7 @@
 
   <a href="{% url 'intervention_create' %}" class="btn btn-success mb-3">Ajouter une intervention</a>
 
-  <table class="table table-striped">
+  <table class="table table-striped-columns table-success table-hover">
     <thead>
       <tr>
         <th>ID</th>
@@ -49,8 +49,8 @@
          <!-- |yesno:"Oui,Non" -->
 
          <td>
-          <a href="{% url 'intervention_update' intervention.id %}" class="btn btn-sm btn-primary">Modifier</a>
-          <a href="{% url 'intervention_delete' intervention.id %}" class="btn btn-sm btn-danger">Supprimer</a>
+          <a href="{% url 'intervention_update' intervention.id %}" class="btn btn-sm btn-primary mb-4">Modifier</a>
+          <a href="{% url 'intervention_delete' intervention.id %}" class="btn btn-sm btn-danger mb-4">Supprimer</a>
           </td>
       </tr>
       {% endfor %}

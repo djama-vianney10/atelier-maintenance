@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block content %}
-  <div class="container mt-4">
+  <div class="container mt-4 table-responsive">
     <h2>Liste des agents</h2>
 
     {% if messages %}
@@ -42,8 +42,8 @@
           <td>{{ agent.grade }}</td>
           <td>{{ agent.service }}</td>
           <td>
-            <a href="{% url 'agent_update' agent.id %}" class="btn btn-warning btn-sm">Modifier</a>
-            <a href="{% url 'agent_delete' agent.id %}" class="btn btn-danger btn-sm">Supprimer</a>
+            <a href="{% url 'agent_update' agent.id %}" class="btn btn-warning btn-sm mb-4">Modifier</a>
+            <a href="{% url 'agent_delete' agent.id %}" class="btn btn-danger btn-sm mb-4">Supprimer</a>
           </td>
         </tr>
         {% empty %}
