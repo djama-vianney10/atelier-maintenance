@@ -17,10 +17,10 @@ class Appareil(models.Model):
     modele = models.CharField(max_length=100)
     marque = models.CharField(max_length=100)
     etat = models.CharField(max_length=100, choices=[
-    ('fonctionnel', 'Fonctionnel'),
+    ('en_reparation', 'En reparation'),
     ('en_panne', 'En panne'),
     ('repare', 'Réparé'),
-], default='fonctionnel')
+], default='En reparation')
 
     def __str__(self):
         return f"{self.nom} ({self.modele} - {self.marque})"
